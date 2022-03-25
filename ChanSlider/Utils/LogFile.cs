@@ -12,6 +12,7 @@ namespace ChanSlider.Utils
         public LogFile(string path)
             : base(new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite), leaveOpen: false)
         {
+            AutoFlush = true;
         }
     }
 }

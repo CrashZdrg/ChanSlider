@@ -49,7 +49,7 @@ namespace ChanSlider.Api
                         switch (propName)
                         {
                             case "id":
-                                current.PostUrl = POSTURL + (string)jsonReader.Value;
+                                current.PostUrl = POSTURL + jsonReader.Value;
                                 break;
                             case "file_url":
                                 if (highRes)

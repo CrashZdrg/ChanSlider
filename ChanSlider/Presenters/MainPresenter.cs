@@ -15,7 +15,7 @@ namespace ChanSlider.Presenters
 {
     class MainPresenter
     {
-        private const int IMGBUFFER = 5;
+        private const int IMGBUFFER = 3;
 
         readonly IMainWindow _window;
         readonly ConfigMdl _cfg;
@@ -79,7 +79,9 @@ namespace ChanSlider.Presenters
             if (string.IsNullOrWhiteSpace(postUrl))
                 return;
 
-            System.Diagnostics.Process.Start(postUrl);
+            _timer.Stop();
+
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(postUrl) { UseShellExecute = true });
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -173,7 +175,7 @@ namespace ChanSlider.Presenters
             if (bufferApiItemsIndex < apiItemBuffer.Count && bufferApiItemsIndex - (currentApiItemsIndex - 2) <= IMGBUFFER)
             {
                 apiItemBuffer[bufferApiItemsIndex].Source = new BitmapImage(apiItemBuffer[bufferApiItemsIndex].Url);
-                log.WriteLine(apiItemBuffer[bufferApiItemsIndex].PostUrl);
+                log.WriteLine(apiItemBuffer[bufferApiItemsIndex].PostUrl);//TODO: log by current not by buffer
                 bufferApiItemsIndex++;
             }
 
@@ -205,13 +207,13 @@ namespace ChanSlider.Presenters
             _cfg.AnimationDurationMs =
                 _window.AnimationDuration < 0 ?
                 (_window.AnimationDuration = 0) :
+                    (_window.Interval > 0 && _window.AnimationDuration > (_window.Interval * 1000)) ?
+                    (_window.AnimationDuration = _window.Interval * 1000) :
                 _window.AnimationDuration;
 
             _cfg.IntervalS =
                 _window.Interval < 0 ?
                 (_window.Interval = 0) :
-                    (_window.Interval * 1000) > _window.AnimationDuration ?
-                    (_window.Interval = _window.AnimationDuration / 1000) :
                 _window.Interval;
 
             _cfg.Api = _window.SelectedApi;
