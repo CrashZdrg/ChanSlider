@@ -1,0 +1,67 @@
+﻿<Window x:Class="ChanSlider.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChanSlider"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Width="800" Height="450"
+        Background="#1E1E1E"
+        Foreground="#E6E6E6">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <Expander DockPanel.Dock="Top" IsExpanded="True" Header="Options">
+            <StackPanel Orientation="Vertical" Margin="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+            
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition MaxWidth="84" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Margin="3" Content="Tags" />
+                    <TextBox x:Name="txtTags" Grid.Row="0" Grid.Column="1" Margin="3" />
+                    <Button x:Name="btnStartStop" Grid.Row="0" Grid.Column="2" Margin="3" Content="Start" />
+                </Grid>
+
+                <CheckBox x:Name="chkFullscreen" Margin="3" Content="Fullscreen" IsChecked="True" />
+                <CheckBox x:Name="chkHighRes" Margin="3" Content="High Res" IsChecked="False" />
+
+                <UniformGrid HorizontalAlignment="Left" Rows="2" Columns="1">
+                
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="3" Content="Interval" />
+                        <TextBox x:Name="txtInterval" Margin="3,3,0,3" MinWidth="46" PreviewTextInput="PreviewTextInput_Int" />
+                        <Label Margin="0,3,3,3" Content="seconds" />
+                    </StackPanel>
+            
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="3" Content="Animation Duration" />
+                        <TextBox x:Name="txtAnimationDuration" Margin="3,3,0,3" MinWidth="64" PreviewTextInput="PreviewTextInput_Int" />
+                        <Label Margin="0,3,3,3" Content="milliseconds" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="3" Content="Api" />
+                        <ComboBox x:Name="cbxApis" Margin="3" MinWidth="200" />
+                    </StackPanel>
+
+                </UniformGrid>
+            
+            </StackPanel>
+        </Expander>
+
+        <ContentControl x:Name="cntRenderView" />
+    </DockPanel>
+</Window>

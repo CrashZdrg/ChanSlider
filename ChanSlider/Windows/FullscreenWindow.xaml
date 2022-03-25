@@ -1,0 +1,13 @@
+﻿<Window x:Class="ChanSlider.Windows.FullscreenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChanSlider.Windows"
+        xmlns:views="clr-namespace:ChanSlider.Views"
+        mc:Ignorable="d"
+        Title="FullscreenWindow"
+        WindowStyle="None"
+        WindowState="Maximized">
+    <views:RenderView x:Name="renderView" />
+</Window>
