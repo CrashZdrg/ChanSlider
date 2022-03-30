@@ -11,7 +11,7 @@ namespace ChanSlider.Api
 {
     class TestApi : BaseApi
     {
-        public override async Task<List<ApiItemMdl>> GetItemsAsync(string[] tags, bool highRes = false)
+        public override async Task<List<ApiItemMdl>> GetItemsAsync(string[] tags, bool highRes = false, int? page = null)
         {
             var list = new List<ApiItemMdl>();
 

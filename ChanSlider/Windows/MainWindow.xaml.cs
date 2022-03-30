@@ -19,16 +19,16 @@ namespace ChanSlider.Windows
 {
     interface IMainWindow
     {
-        Dispatcher Dispatcher { get; }
         bool Running { get; set; }
 
         string Tags { get; set; }
+        System.Collections.IEnumerable Apis { get; set; }
+        int SelectedApi { get; set; }
         bool Fullscreen { get; set; }
         bool HighRes { get; set; }
         int Interval { get; set; }
         int AnimationDuration { get; set; }
-        System.Collections.IEnumerable Apis { get; set; }
-        int SelectedApi { get; set; }
+        int? Page { get; set; }
 
         IRenderView RenderView { get; }
 
@@ -56,6 +56,17 @@ namespace ChanSlider.Windows
             set => txtTags.Text = value;
         }
 
+        public System.Collections.IEnumerable Apis
+        {
+            get => cbxApis.ItemsSource;
+            set => cbxApis.ItemsSource = value;
+        }
+        public int SelectedApi
+        {
+            get => cbxApis.SelectedIndex;
+            set => cbxApis.SelectedIndex = value;
+        }
+
         public bool Fullscreen
         {
             get => chkFullscreen.IsChecked == true;
@@ -80,15 +91,10 @@ namespace ChanSlider.Windows
             set => txtAnimationDuration.Text = value.ToString();
         }
 
-        public System.Collections.IEnumerable Apis
+        public int? Page
         {
-            get => cbxApis.ItemsSource;
-            set => cbxApis.ItemsSource = value;
-        }
-        public int SelectedApi
-        {
-            get => cbxApis.SelectedIndex;
-            set => cbxApis.SelectedIndex = value;
+            get => string.IsNullOrWhiteSpace(txtPage.Text) ? null : int.Parse(txtPage.Text);
+            set => txtPage.Text = value.ToString();
         }
 
         public IRenderView RenderView { get; private set; }
@@ -140,6 +146,12 @@ namespace ChanSlider.Windows
 
         public void TimerTick()
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.BeginInvoke(TimerTick);
+                return;
+            }
+
             NextImage?.Invoke();
         }
 

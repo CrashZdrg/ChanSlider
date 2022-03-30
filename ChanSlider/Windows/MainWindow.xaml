@@ -35,29 +35,30 @@
                     <Button x:Name="btnStartStop" Grid.Row="0" Grid.Column="2" Margin="3" Content="Start" />
                 </Grid>
 
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="3" Content="Api" />
+                    <ComboBox x:Name="cbxApis" Margin="3" MinWidth="200" />
+                </StackPanel>
+
                 <CheckBox x:Name="chkFullscreen" Margin="3" Content="Fullscreen" IsChecked="True" />
                 <CheckBox x:Name="chkHighRes" Margin="3" Content="High Res" IsChecked="False" />
-
-                <UniformGrid HorizontalAlignment="Left" Rows="2" Columns="1">
                 
-                    <StackPanel Orientation="Horizontal">
-                        <Label Margin="3" Content="Interval" />
-                        <TextBox x:Name="txtInterval" Margin="3,3,0,3" MinWidth="46" PreviewTextInput="PreviewTextInput_Int" />
-                        <Label Margin="0,3,3,3" Content="seconds" />
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="3" Content="Interval" />
+                    <TextBox x:Name="txtInterval" Margin="3,3,0,3" MinWidth="46" PreviewTextInput="PreviewTextInput_Int" />
+                    <Label Margin="0,3,3,3" Content="seconds" />
+                </StackPanel>
             
-                    <StackPanel Orientation="Horizontal">
-                        <Label Margin="3" Content="Animation Duration" />
-                        <TextBox x:Name="txtAnimationDuration" Margin="3,3,0,3" MinWidth="64" PreviewTextInput="PreviewTextInput_Int" />
-                        <Label Margin="0,3,3,3" Content="milliseconds" />
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="3" Content="Animation Duration" />
+                    <TextBox x:Name="txtAnimationDuration" Margin="3,3,0,3" MinWidth="64" PreviewTextInput="PreviewTextInput_Int" />
+                    <Label Margin="0,3,3,3" Content="milliseconds" />
+                </StackPanel>
 
-                    <StackPanel Orientation="Horizontal">
-                        <Label Margin="3" Content="Api" />
-                        <ComboBox x:Name="cbxApis" Margin="3" MinWidth="200" />
-                    </StackPanel>
-
-                </UniformGrid>
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="3" Content="Page" />
+                    <TextBox x:Name="txtPage" Margin="3,3,0,3" MinWidth="46" PreviewTextInput="PreviewTextInput_Int" />
+                </StackPanel>
             
             </StackPanel>
         </Expander>

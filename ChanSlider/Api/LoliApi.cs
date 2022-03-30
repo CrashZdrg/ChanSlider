@@ -18,11 +18,14 @@ namespace ChanSlider.Api
 
         }
 
-        public override async Task<List<ApiItemMdl>> GetItemsAsync(string[] tags, bool highRes = false)
+        public override async Task<List<ApiItemMdl>> GetItemsAsync(string[] tags, bool highRes = false, int? page = null)
         {
             var list = new List<ApiItemMdl>();
 
             string fullUrl = $"{URL}?tags={string.Join("%20", tags)}";
+
+            if (page != null)
+                fullUrl += "&page=" + page.Value;
 
             using var stream = await httpClient.GetStreamAsync(fullUrl);
 

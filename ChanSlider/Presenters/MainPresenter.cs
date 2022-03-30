@@ -27,6 +27,7 @@ namespace ChanSlider.Presenters
         List<ApiItemMdl> apiItemBuffer;
         int currentApiItemsIndex;
         int bufferApiItemsIndex;
+        int? currentPage;
 
         Utils.LogFile log;
 
@@ -40,7 +41,7 @@ namespace ChanSlider.Presenters
             {
                 AutoReset = false,
             };
-            _timer.Elapsed += Timer_Elapsed;
+            _timer.Elapsed += (s, e) => _window.TimerTick();
 
             _apis = new List<BaseApi>()
             {
@@ -82,11 +83,6 @@ namespace ChanSlider.Presenters
             _timer.Stop();
 
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(postUrl) { UseShellExecute = true });
-        }
-
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            _window.Dispatcher.BeginInvoke(_window.TimerTick);
         }
 
         private void Window_NextImage()
@@ -137,7 +133,12 @@ namespace ChanSlider.Presenters
 
             var _api = _apis[_cfg.Api];
 
-            apiItemBuffer = await _api.GetItemsAsync(_cfg.Tags.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), _cfg.HighRes);
+            currentPage = _window.Page;
+
+            apiItemBuffer = await _api.GetItemsAsync(_cfg.Tags.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), _cfg.HighRes, currentPage);
+
+            if (currentPage == null)
+                currentPage = 1;
 
             log = new Utils.LogFile("log.log");
 
@@ -175,15 +176,22 @@ namespace ChanSlider.Presenters
             if (bufferApiItemsIndex < apiItemBuffer.Count && bufferApiItemsIndex - (currentApiItemsIndex - 2) <= IMGBUFFER)
             {
                 apiItemBuffer[bufferApiItemsIndex].Source = new BitmapImage(apiItemBuffer[bufferApiItemsIndex].Url);
-                log.WriteLine(apiItemBuffer[bufferApiItemsIndex].PostUrl);//TODO: log by current not by buffer
+                log.WriteLine(apiItemBuffer[bufferApiItemsIndex].PostUrl);
                 bufferApiItemsIndex++;
             }
 
-            if (currentApiItemsIndex < apiItemBuffer.Count)
+            if (currentApiItemsIndex >= apiItemBuffer.Count)
             {
-                if (_cfg.IntervalS > 0)
-                    _timer.Start();
+                var _api = _apis[_cfg.Api];
+
+                currentPage++;
+
+                var buffer = _api.GetItemsAsync(_cfg.Tags.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), _cfg.HighRes, currentPage).GetAwaiter().GetResult();
+                apiItemBuffer.AddRange(buffer);
             }
+
+            if (_cfg.IntervalS > 0)
+                _timer.Start();
         }
 
         private void Window_Stop()

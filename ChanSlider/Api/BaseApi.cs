@@ -24,7 +24,7 @@ namespace ChanSlider.Api
             AppDomain.CurrentDomain.DomainUnload += CurrentDomain_DomainUnload;
         }
 
-        public abstract Task<List<ApiItemMdl>> GetItemsAsync(string[] tags, bool highRes = false);
+        public abstract Task<List<ApiItemMdl>> GetItemsAsync(string[] tags, bool highRes = false, int? page = null);
 
         private static void CurrentDomain_DomainUnload(object sender, EventArgs e)
         {
