@@ -185,6 +185,7 @@ namespace ChanSlider.Presenters
                 var _api = _apis[_cfg.Api];
 
                 currentPage++;
+                _window.Page = currentPage;
 
                 var buffer = _api.GetItemsAsync(_cfg.Tags.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), _cfg.HighRes, currentPage).GetAwaiter().GetResult();
                 apiItemBuffer.AddRange(buffer);
